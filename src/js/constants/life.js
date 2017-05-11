@@ -1,0 +1,9 @@
+export const PLAY_LIFE = 'PLAY_LIFE';
+export const STOP_LIFE = 'STOP_LIFE';
+export const RESET_LIFE = 'RESET_LIFE';
+export const NEXT_GENERATION_ERROR = 'NEXT_GENERATION_ERROR';
+export const RESTORE_LIFE = 'RESTORE_LIFE';
+export const ADD_PATTERN = 'ADD_PATTERN';
+export const NEXT_GENERATION = 'NEXT_GENERATION';
+export const PREV_GENERATION = 'PREV_GENERATION';
+export const CHANGE_FREQUENCY = 'CHANGE_FREQUENCY';

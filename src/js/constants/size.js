@@ -1,0 +1,2 @@
+export const WINDOW_SIZE_CHANGE = 'WINDOW_SIZE_CHANGE';
+export const SCALE_CHANGE = 'SCALE_CHANGE';
