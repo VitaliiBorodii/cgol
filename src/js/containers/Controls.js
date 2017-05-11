@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { onAddPattern } from '../actions/pattern';
-import { tick, onFrequencyChange, stopLife, playLife, resetLife, restoreLife, previousStep } from '../actions/life';
+import { tick, onFrequencyChange, stopLife, playLife, resetLife, previousStep } from '../actions/life';
 import { scaleChanged } from '../actions/size';
 import Pattern from '../components/Pattern';
 import Buttons from '../components/Buttons';
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class Contorls extends Component {
+class Controls extends Component {
 
   constructor() {
     super(...arguments);
@@ -39,7 +39,7 @@ class Contorls extends Component {
   }
 
   onDrawChart() {
-    drawChart()
+    drawChart();
   }
 
   onBackStep() {
@@ -110,13 +110,13 @@ class Contorls extends Component {
           cycle={cells.step}
         />
         <DrawChart
-        onClick={this.onDrawChart}
+          onClick={this.onDrawChart}
         />
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps)(Contorls);
+export default connect(mapStateToProps)(Controls);
 
 

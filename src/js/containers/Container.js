@@ -1,4 +1,3 @@
-//import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import Canvas from '../components/Canvas';
 import { connect } from 'react-redux';
@@ -34,7 +33,7 @@ class Container extends Component {
     const { container } = this.refs;
 
     this.props.dispatch(
-      windowSizeChanged({
+      windowSizeChanged({ // - paddings and borders
         width: container.clientWidth - 22,
         height: container.clientHeight - 22
       })
