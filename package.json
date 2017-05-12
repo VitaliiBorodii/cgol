@@ -2,7 +2,7 @@
   "name": "cgof",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vitaliiborodii.github.io/cgof",
+  "homepage": "https://vitaliiborodii.github.io/cgol",
   "dependencies": {
     "material-design-lite": "^1.3.0",
     "prop-types": "^15.5.9",
