@@ -1,15 +1,11 @@
-import { isEqualMap, countNextGeneration } from '../utils';
 import {
   PLAY_LIFE,
   STOP_LIFE,
-  RESET_LIFE,
-  NEXT_GENERATION_ERROR,
-  RESTORE_LIFE,
-  NEXT_GENERATION,
-  CHANGE_FREQUENCY,
-  PREV_GENERATION
+  NEXT_STEP,
+  CHANGE_FREQUENCY
 } from '../constants/life';
-import db from '../services/db';
+
+import { REQUEST_LAST_STEP, REQUEST_PREVIOUS_STEP, RESET_LIFE } from '../constants/lifecycles'
 
 export const onFrequencyChange = (frequency) => {
   return {
@@ -24,54 +20,28 @@ export const stopLife = () => {
   }
 };
 
-export const playLife = (interval) => {
+export const playLife = () => {
   return {
-    type: PLAY_LIFE,
-    interval
+    type: PLAY_LIFE
   }
 };
 
-export const restoreLife = (restore) => ( {
-  type: RESTORE_LIFE,
-  restore
+export const restoreLife = () => ( {
+  type: REQUEST_LAST_STEP
 });
 
 export const resetLife = () => {
-  db.clear();
-
   return {
     type: RESET_LIFE
   }
 };
 
-export const previousStep = (state) => ({
-  type: PREV_GENERATION,
-  state
+export const previousStep = (step) => ({
+  type: REQUEST_PREVIOUS_STEP
 });
 
-export function tick(cellsState, size) {
-
-  const cells = cellsState.cells;
-
-  if (!cellsState.step) { // save 0 step
-    db.set(cellsState.step, cells);
-  }
-
-  const nextGeneration = countNextGeneration(cells, size);
-
-  if (isEqualMap(cells, nextGeneration)) {
-    return {
-      type: NEXT_GENERATION_ERROR,
-      error: `Life is Stopped!!`
-    };
-  }
-
-  const nextStep = cellsState.step + 1;
-  db.set(nextStep, nextGeneration);
-
+export const nextStep = () => {
   return {
-    type: NEXT_GENERATION,
-    step: nextStep,
-    newGeneration: nextGeneration
+    type: NEXT_STEP
   }
-}
+};

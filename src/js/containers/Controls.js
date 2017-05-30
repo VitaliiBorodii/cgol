@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { onAddPattern } from '../actions/pattern';
-import { tick, onFrequencyChange, stopLife, playLife, resetLife, previousStep } from '../actions/life';
+import { onAddPattern } from '../actions/cells';
+import { nextStep, onFrequencyChange, stopLife, playLife, resetLife, previousStep } from '../actions/life';
 import { scaleChanged } from '../actions/size';
 import Pattern from '../components/Pattern';
 import Buttons from '../components/Buttons';
 import Frequency from '../components/Frequency';
 import Output from '../components/Output';
 import DrawChart from '../components/Chart';
-import db from '../services/db';
 import { drawChart } from '../services/chart';
 
 const mapStateToProps = (state) => {
@@ -43,27 +42,15 @@ class Controls extends Component {
   }
 
   onBackStep() {
-    this.stop();
-    const step = this.props.cells.step - 1;
-    db.get(step).then(cells => {
-      cells && this.props.dispatch(previousStep({
-        cells,
-        step
-      }));
-    });
+    return this.props.dispatch(previousStep());
   }
 
   onNextStep() {
-    this.stop();
-    this.props.dispatch(tick(this.props.cells, this.props.size));
+    this.props.dispatch(nextStep());
   }
 
   play() {
-    const timeout = Math.round(60000 / this.props.interval.frequency);
-
-    this.props.dispatch(playLife(setTimeout(this.play, timeout)));
-
-    this.props.dispatch(tick(this.props.cells, this.props.size));
+    this.props.dispatch(playLife());
   }
 
   stop() {

@@ -1,7 +1,6 @@
-import { TOGGLE_CELL } from '../constants/cells';
-import { RESET_LIFE, RESTORE_LIFE, NEXT_GENERATION, PREV_GENERATION } from '../constants/life';
-import { ADD_PATTERN } from '../constants/pattern';
-import { formKey } from '../utils/index';
+import { NEXT_STEP_DONE } from '../constants/life';
+import { RESET_LIFE, RESTORE_LIFE, RECEIVE_PREVIOUS_STEP } from '../constants/lifecycles';
+import { ADD_PATTERN_DONE, TOGGLE_CELL_DONE } from '../constants/cells';
 
 const initState = {
   cells: new Map(),
@@ -10,7 +9,7 @@ const initState = {
 };
 
 export default (state = initState, action) => {
-  let newCells;
+
   switch (action.type) {
 
     case RESTORE_LIFE:
@@ -19,44 +18,40 @@ export default (state = initState, action) => {
         ...action.restore
       };
 
-    case TOGGLE_CELL:
-      const { x, y } = action.coords;
-      newCells = new Map(state.cells);
-      const key = formKey(x, y);
-
+    case TOGGLE_CELL_DONE:
       return state.readOnly ? state : {
         ...state,
-        cells: newCells.has(key) ? (newCells.delete(key) && newCells) : (newCells.set(key, 1))
+        cells: action.cells
       };
 
-    case ADD_PATTERN:
+    case ADD_PATTERN_DONE:
 
-      return state.readOnly ? state : {
+      return {
         ...state,
-        cells: action.cells.reduce((acc, key) => {
-          return acc.set(key, 1);
-        }, new Map(state.cells))
+        cells: action.cells
       };
 
-    case NEXT_GENERATION:
+    case NEXT_STEP_DONE:
 
       return {
         ...state,
         step: action.step,
-        cells: action.newGeneration,
+        cells: action.cells,
         readOnly: false,
       };
 
-    case PREV_GENERATION: {
+    case RECEIVE_PREVIOUS_STEP:
+    {
       return {
         ...state,
         readOnly: true,
-        cells: action.state.cells,
-        step: action.state.step
+        cells: action.cells,
+        step: state.step - 1
       };
     }
 
-    case RESET_LIFE: {
+    case RESET_LIFE:
+    {
       return {
         ...initState
       };

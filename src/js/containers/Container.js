@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { windowSizeChanged } from '../actions/size';
 import { toggleCell } from '../actions/cells';
 import { restoreLife } from '../actions/life';
-import db from '../services/db';
 
 const mapStateToProps = (state) => {
   return {
@@ -20,9 +19,7 @@ class Container extends Component {
     this.resizeHandler = this.resizeHandler.bind(this);
     this.onCanvasClick = this.onCanvasClick.bind(this);
 
-    db.getLast().then(result => {
-      result && this.props.dispatch(restoreLife(result));
-    })
+    this.props.dispatch(restoreLife());
   }
 
   onCanvasClick(coords) {

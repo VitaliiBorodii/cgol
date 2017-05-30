@@ -76,7 +76,7 @@ idbKeyval.prototype = {
   getLast() {
     return this.keys().then(keys => {
       const last = keys.pop();
-      return last ? this.get(last).then(result => ({
+      return Number.isInteger(last) ? this.get(last).then(result => ({
         step: last,
         cells: result
       })) : null;

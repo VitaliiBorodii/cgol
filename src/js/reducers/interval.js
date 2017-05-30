@@ -1,7 +1,7 @@
-import { PLAY_LIFE, STOP_LIFE, RESET_LIFE, NEXT_GENERATION_ERROR, CHANGE_FREQUENCY } from '../constants/life';
+import { PLAY_LIFE, STOP_LIFE, NEXT_STEP_ERROR, CHANGE_FREQUENCY, NEXT_STEP } from '../constants/life';
+import { RESET_LIFE, RECEIVE_PREVIOUS_STEP } from '../constants/lifecycles';
 
 const initState = {
-  interval: null,
   frequency: 120,
   running: false,
   error: null
@@ -19,28 +19,25 @@ export default (state = initState, action) => {
     case PLAY_LIFE:
       return {
         ...state,
-        interval: action.interval,
         running: true
       };
 
     case STOP_LIFE:
     case RESET_LIFE:
+    case RECEIVE_PREVIOUS_STEP:
+    case NEXT_STEP:
 
-      clearInterval(state.interval);
       return {
         ...state,
         error: null,
         running: false,
-        interval: null
       };
 
-    case NEXT_GENERATION_ERROR:
+    case NEXT_STEP_ERROR:
 
-      clearInterval(state.interval);
       return {
         ...state,
         running: false,
-        interval: null,
         error: action.error
       };
 

@@ -1,1 +1,4 @@
 export const TOGGLE_CELL = 'TOGGLE_CELL';
+export const TOGGLE_CELL_DONE = 'TOGGLE_CELL_DONE';
+export const ADD_PATTERN = 'ADD_PATTERN';
+export const ADD_PATTERN_DONE = 'ADD_PATTERN_DONE';
