@@ -9,6 +9,7 @@ const initState = {
 };
 
 export default (state = initState, action) => {
+
   switch (action.type) {
     case WINDOW_SIZE_CHANGE:
       const { rectSize } = state;
@@ -28,7 +29,7 @@ export default (state = initState, action) => {
       let setRectSize = state.rectSize;
       const newRectSize = setRectSize + action.direction;
 
-      if ((newRectSize < state.xCount && newRectSize < state.yCount) && (newRectSize > 2)) {
+      if ((newRectSize < state.xCount && newRectSize < state.yCount) && (newRectSize >= 2)) {
 
         return {
           ...state,

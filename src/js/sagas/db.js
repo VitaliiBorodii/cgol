@@ -5,15 +5,17 @@ import { ADD_PATTERN_DONE, TOGGLE_CELL_DONE } from '../constants/cells';
 import { NEXT_STEP_DONE } from '../constants/life';
 import { REQUEST_LAST_STEP, RESTORE_LIFE, REQUEST_PREVIOUS_STEP, RECEIVE_PREVIOUS_STEP, RESET_LIFE } from '../constants/lifecycles';
 
-const CLEANUP_INTERVAL = 10000;
+const CLEANUP_INTERVAL = 60000; // perform DataBase cleanup every minute
 const CLEANUP_SIZE = 500;
 
 let interval;
+/*
 
 const cancelCleanup = () => {
   clearInterval(interval);
   interval = null;
 };
+*/
 
 const runCleanup = () => {
   interval = setInterval(() => {

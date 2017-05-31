@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const Chart = ({onClick}) => {
   return (
-    <div className="buttons">
-      <div onClick={onClick} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="draw-chart"><i
+    <div className="buttons mdl-list">
+      <div onClick={onClick} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored pattern-inputs-button"><i
         className="material-icons">timeline</i> Draw chart
       </div>
     </div>

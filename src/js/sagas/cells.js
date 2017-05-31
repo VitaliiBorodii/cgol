@@ -5,6 +5,7 @@ import { READ_ONLY_ERROR } from '../constants/lifecycles'
 import { formKey } from '../utils';
 
 const getCells = state => state.cells;
+const getSize = state => state.size;
 
 function* toggleCell(action) {
   const { coords: {x, y} } = action;
@@ -21,9 +22,13 @@ function* toggleCell(action) {
 }
 
 function* addPattern(action) {
-  const { pattern, coords: {x, y} } = action;
+  const { pattern } = action;
 
   const cells = yield select(getCells);
+  const size = yield select(getSize);
+
+  const x = size.xCount;
+  const y = size.yCount;
 
   if (cells.readOnly) {
     return yield put({

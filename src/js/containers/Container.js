@@ -31,8 +31,8 @@ class Container extends Component {
 
     this.props.dispatch(
       windowSizeChanged({ // - paddings and borders
-        width: container.clientWidth - 22,
-        height: container.clientHeight - 22
+        width: container.clientWidth,
+        height: container.clientHeight
       })
     );
   };
@@ -51,16 +51,18 @@ class Container extends Component {
     const { size, cells } = this.props;
 
     return (
-      <div className="container" ref="container">
-        <Canvas
-          onClick={this.onCanvasClick}
-          width={size.canvasWidth}
-          height={size.canvasHeight}
-          xCount={size.xCount}
-          yCount={size.yCount}
-          rectSize={size.rectSize}
-          cells={cells}
-        />
+      <div className="mdl-layout__content container-container">
+        <div className="page-content container-content" ref="container">
+          <Canvas
+            onClick={this.onCanvasClick}
+            width={size.canvasWidth}
+            height={size.canvasHeight}
+            xCount={size.xCount}
+            yCount={size.yCount}
+            rectSize={size.rectSize}
+            cells={cells}
+          />
+        </div>
       </div>
     )
   }

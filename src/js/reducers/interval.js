@@ -8,6 +8,7 @@ const initState = {
 };
 
 export default (state = initState, action) => {
+
   switch (action.type) {
     case CHANGE_FREQUENCY:
       return {
@@ -19,6 +20,7 @@ export default (state = initState, action) => {
     case PLAY_LIFE:
       return {
         ...state,
+        error: null,
         running: true
       };
 

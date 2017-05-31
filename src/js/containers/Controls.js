@@ -6,14 +6,12 @@ import { scaleChanged } from '../actions/size';
 import Pattern from '../components/Pattern';
 import Buttons from '../components/Buttons';
 import Frequency from '../components/Frequency';
-import Output from '../components/Output';
 import DrawChart from '../components/Chart';
 import { drawChart } from '../services/chart';
 
 const mapStateToProps = (state) => {
   return {
     size: state.size,
-    cells: state.cells,
     interval: state.interval
   };
 };
@@ -66,7 +64,7 @@ class Controls extends Component {
   }
 
   onAddPattern(pattern) {
-    this.props.dispatch(onAddPattern(pattern, {x: this.props.size.xCount, y: this.props.size.yCount}));
+    this.props.dispatch(onAddPattern(pattern));
   }
 
   onZoom(direction) {
@@ -74,27 +72,26 @@ class Controls extends Component {
   }
 
   render() {
-    const { cells, size, interval } = this.props;
+    const { interval } = this.props;
+    const isPlaying = interval.running;
+
     return (
-      <div className="controls">
+      <div className="controls mdl-layout__drawer">
         <Pattern
           isPlaying={interval.running}
-          onPlay={this.onPlay}
-          onReset={this.onReset}
           onAddPattern={this.onAddPattern}
         />
         <Buttons
+          isPlaying={isPlaying}
+          onPlay={this.onPlay}
+          onReset={this.onReset}
           onPrev={this.onBackStep}
           onZoom={this.onZoom}
           onNext={this.onNextStep}
         />
-        <Frequency onChange={this.onFrequencyChange} frequency={interval.frequency}/>
-        <Output
-          error={interval.error}
-          xSize={size.xCount}
-          ySize={size.yCount}
-          aliveCells={cells.cells.size}
-          cycle={cells.step}
+        <Frequency
+          onChange={this.onFrequencyChange}
+          frequency={interval.frequency}
         />
         <DrawChart
           onClick={this.onDrawChart}

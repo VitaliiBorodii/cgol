@@ -8,62 +8,39 @@ body, html, #root, #App-root {
     background: white;
 }
 
-canvas {
+.app-canvas {
     cursor: pointer;
     border: solid 1px black;
 }
 
-.container, .controls {
-    height: 100%;
-    float: left;
-}
-
-.container {
-    width: calc(100% - 420px);
-    height: calc(100% - 20px);
+.container-container {
     padding: 10px;
+    flex-direction: column;
 }
 
-.controls {
-    width: 400px;
+.container-container, .container-content {
+    display: flex;
+    flex: 1;
 }
 
-.pattern-textarea textarea {
+.pattern-textarea-input {
     resize: none;
-}
-
-.buttons button, .buttons label {
-    margin: 5px;
-}
-
-.buttons button:first-child {
-    margin-left: 0;
-}
-
-.buttons button:last-child {
-    margin-right: 0;
+    width: 95%;
+    margin: 0 auto;
 }
 
 .pattern-inputs {
     padding: 0 5px;
 }
 
-.pattern-inputs-button {
-    margin: 0 5px;
-}
-
-.pattern-inputs-button:first-child {
-    margin-left: 0;
-}
-
-.pattern-inputs-button:last-child {
-    margin-right: 0;
+.mdl-button {
+    margin: 5px;
 }
 
 .input, .buttons, .slider {
-    display: block;
-    width: calc(100% - 10px);
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
     padding: 5px;
 }
 
@@ -71,9 +48,33 @@ canvas {
     width: 100%;
 }
 
-.slider output {
-    display: block;
-    margin: 10px 5px;
+.slider .slider-label {
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.slider-label-text {
+    margin: 5px;
+}
+
+.header-button {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.header-button .mdl-button {
+    color: white;
+}
+
+.logs {
+    display: flex;
+    flex-direction: row;
+}
+
+.logs-item {
+    color: white;
 }
 
 .logs .info {
@@ -89,7 +90,5 @@ canvas {
 }
 
 .message {
-    color: gray;
-    border-top: 1px solid gray;
-    margin: 10px auto;
+    color: #ccc;
 }

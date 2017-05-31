@@ -111,6 +111,7 @@ class Canvas extends Component {
   render() {
     return (
       <canvas
+        className="app-canvas"
         width={this.props.width}
         height={this.props.height}
         onClick={this.onClick}
