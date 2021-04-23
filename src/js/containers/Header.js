@@ -11,14 +11,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const Header = (props) => {
+const Header = ({ dispatch, interval, size, cells }) => {
 
-  const onPlay = () => {
-    props.dispatch(props.interval.running ? stopLife() : playLife());
-  };
-
-  const { interval, size, cells } = props;
-  const isPlaying = interval.running;
+  const onPlay = () => dispatch(interval.running ? stopLife() : playLife());
 
   return (
     <div className="mdl-layout__header">
@@ -27,9 +22,9 @@ const Header = (props) => {
         <div className="mdl-layout-spacer">
           <div className="header-button">
             <button onClick={onPlay}
-                    className="mdl-button mdl-js-button mdl-button--raised">
+              className="mdl-button mdl-js-button mdl-button--raised">
               <i
-                className="material-icons">{isPlaying ? 'pause' : 'play_arrow'}</i></button>
+                className="material-icons">{interval.running ? 'pause' : 'play_arrow'}</i></button>
           </div>
         </div>
         <div className="mdl-navigation mdl-layout--large-screen-only">
