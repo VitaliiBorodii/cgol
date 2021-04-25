@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { onAddPattern } from '../actions/cells';
 import { nextStep, onFrequencyChange, stopLife, playLife, resetLife, previousStep } from '../actions/life';
@@ -16,91 +16,38 @@ const mapStateToProps = (state) => {
   };
 };
 
-class Controls extends Component {
+const Controls = ({ interval, dispatch }) => {
+  const handleFrequencyChange = (value) => dispatch(onFrequencyChange(value));
+  const onBackStep = () => dispatch(previousStep());
+  const onNextStep = () => dispatch(nextStep());
+  const onReset = () => dispatch(resetLife());
+  const onPlay = () => dispatch(interval.running ? stopLife() : playLife());
+  const handleAddPattern = (pattern) => dispatch(onAddPattern(pattern));
+  const onZoom = (direction) => dispatch(scaleChanged(direction));
 
-  constructor() {
-    super(...arguments);
-    this.onAddPattern = this.onAddPattern.bind(this);
-    this.onNextStep = this.onNextStep.bind(this);
-    this.onFrequencyChange = this.onFrequencyChange.bind(this);
-    this.onPlay = this.onPlay.bind(this);
-    this.play = this.play.bind(this);
-    this.onReset = this.onReset.bind(this);
-    this.onZoom = this.onZoom.bind(this);
-    this.onBackStep = this.onBackStep.bind(this);
-    this.onDrawChart = this.onDrawChart.bind(this);
-  }
-
-  onFrequencyChange(value) {
-    this.props.dispatch(onFrequencyChange(value));
-  }
-
-  onDrawChart() {
-    drawChart();
-  }
-
-  onBackStep() {
-    return this.props.dispatch(previousStep());
-  }
-
-  onNextStep() {
-    this.props.dispatch(nextStep());
-  }
-
-  play() {
-    this.props.dispatch(playLife());
-  }
-
-  stop() {
-    this.props.dispatch(stopLife());
-  }
-
-  onReset() {
-    this.props.dispatch(resetLife());
-  }
-
-  onPlay() {
-    this.props.interval.running ? this.stop() : this.play();
-  }
-
-  onAddPattern(pattern) {
-    this.props.dispatch(onAddPattern(pattern));
-  }
-
-  onZoom(direction) {
-    this.props.dispatch(scaleChanged(direction))
-  }
-
-  render() {
-    const { interval } = this.props;
-    const isPlaying = interval.running;
-
-    return (
-      <div className="controls mdl-layout__drawer">
-        <Pattern
-          isPlaying={interval.running}
-          onAddPattern={this.onAddPattern}
-        />
-        <Buttons
-          isPlaying={isPlaying}
-          onPlay={this.onPlay}
-          onReset={this.onReset}
-          onPrev={this.onBackStep}
-          onZoom={this.onZoom}
-          onNext={this.onNextStep}
-        />
-        <Frequency
-          onChange={this.onFrequencyChange}
-          frequency={interval.frequency}
-        />
-        <DrawChart
-          onClick={this.onDrawChart}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className="controls mdl-layout__drawer">
+      <Pattern
+        isPlaying={interval.running}
+        onAddPattern={handleAddPattern}
+      />
+      <Buttons
+        isPlaying={interval.running}
+        onPlay={onPlay}
+        onReset={onReset}
+        onPrev={onBackStep}
+        onZoom={onZoom}
+        onNext={onNextStep}
+      />
+      <Frequency
+        onChange={handleFrequencyChange}
+        frequency={interval.frequency}
+      />
+      <DrawChart
+        onClick={drawChart}
+      />
+    </div>
+  );
 }
 
 export default connect(mapStateToProps)(Controls);
-
-

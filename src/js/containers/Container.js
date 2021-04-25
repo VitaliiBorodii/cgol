@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Canvas from '../components/Canvas';
 import { connect } from 'react-redux';
 import { windowSizeChanged } from '../actions/size';
@@ -12,61 +12,48 @@ const mapStateToProps = (state) => {
   };
 };
 
-class Container extends Component {
+const Container = ({ size, cells, dispatch }) => {
+  const container = useRef(null);
 
-  constructor() {
-    super(...arguments);
-    this.resizeHandler = this.resizeHandler.bind(this);
-    this.onCanvasClick = this.onCanvasClick.bind(this);
+  useEffect(() => {
+    dispatch(restoreLife());
 
-    this.props.dispatch(restoreLife());
-  }
+    const resizeHandler = () => {
+      dispatch(
+        windowSizeChanged({ // - paddings and borders
+          width: container.current.clientWidth,
+          height: container.current.clientHeight
+        })
+      );
+    };
+    // set resize listener
+    window.addEventListener('resize', resizeHandler);
 
-  onCanvasClick(coords) {
-    this.props.dispatch(toggleCell(coords));
-  }
+    resizeHandler();
+    // clean up function
+    return () => {
+      // remove resize listener
+      window.removeEventListener('resize', resizeHandler);
+    }
+  }, [])
 
-  resizeHandler() {
-    const { container } = this.refs;
+  const onCanvasClick = (coords) => dispatch(toggleCell(coords));
 
-    this.props.dispatch(
-      windowSizeChanged({ // - paddings and borders
-        width: container.clientWidth,
-        height: container.clientHeight
-      })
-    );
-  };
-
-  componentDidMount() {
-    window.addEventListener('resize', this.resizeHandler);
-    this.resizeHandler();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeHandler);
-    this.resizeHandler = null;
-  }
-
-  render() {
-    const { size, cells } = this.props;
-
-    return (
-      <div className="mdl-layout__content container-container">
-        <div className="page-content container-content" ref="container">
-          <Canvas
-            onClick={this.onCanvasClick}
-            width={size.canvasWidth}
-            height={size.canvasHeight}
-            xCount={size.xCount}
-            yCount={size.yCount}
-            rectSize={size.rectSize}
-            cells={cells}
-          />
-        </div>
+  return (
+    <div className="mdl-layout__content container-container">
+      <div className="page-content container-content" ref={container}>
+        <Canvas
+          onClick={onCanvasClick}
+          width={size.canvasWidth}
+          height={size.canvasHeight}
+          xCount={size.xCount}
+          yCount={size.yCount}
+          rectSize={size.rectSize}
+          cells={cells}
+        />
       </div>
-    )
-  }
-
+    </div>
+  )
 }
 
 export default connect(mapStateToProps)(Container);

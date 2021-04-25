@@ -1,5 +1,4 @@
-import { delay } from 'redux-saga';
-import { put, takeEvery, select } from 'redux-saga/effects';
+import { put, takeEvery, select, delay } from 'redux-saga/effects';
 
 import { REQUEST_PREVIOUS_STEP, RESET_LIFE } from '../constants/lifecycles';
 import { NEXT_STEP, NEXT_STEP_DONE, NEXT_STEP_ERROR, PLAY_LIFE, STOP_LIFE } from '../constants/life';
